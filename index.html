@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voluntários do Carnaval | Confete Zero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <div class="background-overlay"></div>
+    <div class="confetti-bar"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🎉</div>
+            <div class="logo-text">
+                <span>Confete Zero</span>
+                <span>Limpeza Urbana · Recife & Olinda</span>
+            </div>
+        </div>
+        <div id="badge-usuario" class="header-badge">Sistema de Cadastro</div>
+    </header>
+
+    <nav id="menu-navegacao" style="display: none;">
+        <button class="tab" onclick="mostrarSecao('cadastrar')" id="tab-cadastrar">Cadastrar</button>
+        <button class="tab" onclick="mostrarSecao('listar')" id="tab-listar">Voluntários</button>
+        <button class="tab btn-sair" onclick="fazerLogout()">Sair</button>
+    </nav>
+
+    <main>
+        <section id="secao-login">
+            <div class="card card-login">
+                <div class="card-title">Bem-vindo(a) ao Confete Zero!</div>
+                <div class="card-subtitle">Como você deseja acessar o sistema?</div>
+                
+                <div class="btn-column">
+                    <button class="btn btn-primary" onclick="entrarComoVoluntario()">Quero ser Voluntário</button>
+                    <button class="btn btn-ghost" onclick="abrirModalEdicao()">Já sou voluntário (Editar)</button>
+                    <button class="btn btn-ghost" onclick="entrarComoAdmin()">Acesso Funcionário</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="secao-cadastrar" style="display: none;">
+            <div class="card">
+                <div class="card-title" id="titulo-cadastro">Novo Voluntário</div>
+                <div class="card-subtitle" id="subtitulo-cadastro">Preencha os dados para se cadastrar na operação de limpeza.</div>
+
+                <input type="hidden" id="id-edicao" value="">
+
+                <div class="bloco-form">
+                    <div class="bloco-titulo">Dados Pessoais</div>
+                    <div class="form-group">
+                        <label for="nome">Nome Completo (Obrigatório)</label>
+                        <input type="text" id="nome" placeholder="ex: Maria da Silva"/>
+                    </div>
+                </div>
+
+                <div class="bloco-form">
+                    <div class="bloco-titulo">Contato</div>
+                    <div class="form-group">
+                        <label>Tipo de contato</label>
+                        <div class="opcoes-contato">
+                            <label class="opcao-check">
+                                <input type="checkbox" id="check-telefone" onchange="atualizarContato()"/>
+                                <span>Telefone</span>
+                            </label>
+                            <label class="opcao-check">
+                                <input type="checkbox" id="check-email" onchange="atualizarContato()"/>
+                                <span>E-mail</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-top: 16px;">
+                        <div class="form-group" id="campo-telefone" style="display: none;">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" id="telefone" placeholder="(81) 9 0000-0000" />
+                        </div>
+                        <div class="form-group" id="campo-email" style="display: none;">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" placeholder="exemplo@gmail.com" />
+                        </div>     
+                    </div>
+                </div>
+
+                <div class="bloco-form">
+                    <div class="bloco-titulo">Local de atuação</div>
+                    <div class="form-group">
+                        <label>Cidade</label>
+                        <div class="opcoes-cidade">
+                            <label class="opcao-radio">
+                                <input type="radio" name="cidade" value="recife" onchange="atualizarBairros()" />
+                                <span>Recife</span>
+                            </label>
+                            <label class="opcao-radio">
+                                <input type="radio" name="cidade" value="olinda" onchange="atualizarBairros()" />
+                                <span>Olinda</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="campo-bairro" style="display: none; margin-top: 16px;">
+                        <label for="bairro">Bairro de atuação</label>
+                        <select id="bairro">
+                            <option value="">Selecione um bairro para atuar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bloco-form">
+                    <div class="bloco-titulo">Dias disponíveis</div>
+                    <p class="bloco-descricao">Selecione os dias em que você poderá atuar durante o carnaval</p>
+
+                    <div class="opcoes-dias">
+                        <label class="opcao-dia">
+                            <input type="checkbox" name="dias" value="sabado" />
+                            <span class="dia-label"><span class="dia-nome">Sábado</span><span class="dia-desc">Abertura</span></span>
+                        </label>
+                        <label class="opcao-dia">
+                            <input type="checkbox" name="dias" value="domingo" />
+                            <span class="dia-label"><span class="dia-nome">Domingo</span><span class="dia-desc">2º dia</span></span>
+                        </label>
+                        <label class="opcao-dia">
+                            <input type="checkbox" name="dias" value="segunda" />
+                            <span class="dia-label"><span class="dia-nome">Segunda</span><span class="dia-desc">3º dia</span></span>
+                        </label>
+                        <label class="opcao-dia">
+                            <input type="checkbox" name="dias" value="terca" />
+                            <span class="dia-label"><span class="dia-nome">Terça</span><span class="dia-desc">4º dia</span></span>
+                        </label>
+                        <label class="opcao-dia">
+                            <input type="checkbox" name="dias" value="quarta" />
+                            <span class="dia-label"><span class="dia-nome">Quarta</span><span class="dia-desc">Cinzas</span></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="mensagem-erro" class="mensagem-erro" style="display: none;"></div>
+
+                <div class="btn-row">
+                    <button class="btn btn-ghost" onclick="limparFormulario()">Limpar</button>
+                    <button class="btn btn-primary" id="btn-salvar" onclick="salvarVoluntario()">Cadastrar</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="secao-listar" style="display: none;">
+            <div class="card">
+                <div class="card-title">Voluntários Cadastrados</div>
+                <div class="card-subtitle">Confira a equipe montada para a limpeza do Carnaval.</div>
+
+                <div class="mensagem-convocacao">
+                    <strong>Atenção:</strong> A reunião geral de alinhamento e entrega dos kits será na sexta-feira pré-carnaval, às 14h, na Praça do Marco Zero!
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nome</th>
+                                <th class="col-privada">Contato</th>
+                                <th class="col-privada">Cidade</th>
+                                <th class="col-privada">Bairro</th>
+                                <th class="col-privada">Dias</th>
+                                <th class="col-privada">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-corpo">
+            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="confetti-bar"></div>
+    <script src="script.js"></script>
+
+</body>
+</html>
