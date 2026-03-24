@@ -95,14 +95,7 @@ function entrarComoVoluntario() {
 }
 
 function entrarComoAdmin() {
-    var senha = prompt("Digite a senha de funcionário:");
-    if (senha === "123") {
-        sessionStorage.setItem("papel", "admin");
-        document.getElementById("badge-usuario").textContent = "Painel do Admin";
-        mostrarSecao('listar');
-    } else if (senha !== null) {
-        mostrarModal("Acesso Negado", "Senha incorreta! Tente novamente.");
-    }
+    abrirModalAdmin();
 }
 
 function fazerLogout() {
@@ -243,17 +236,7 @@ function renderizarTabela() {
 
 // ediçao de voluntarios
 function abrirModalEdicao() {
-    var idDigitado = prompt("Por favor, digite seu código de inscrição (ID):");
-    if (!idDigitado) return;
-
-    var voluntario = listaVoluntarios.find(v => v.id == idDigitado);
-    if (!voluntario) {
-        mostrarModal("Ops!", "Cadastro não encontrado! Verifique se você digitou o código corretamente.");
-        return;
-    }
-
-    entrarComoVoluntario();
-    preencherFormularioParaEdicao(voluntario);
+    abrirModalBuscaId();
 }
 
 function preencherFormularioParaEdicao(v) {
