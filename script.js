@@ -68,7 +68,7 @@ function buscarIdEdicao() {
     fecharModalId();
 
     if (!voluntario) {
-        mostrarModal("Cadastro não encontrado! Verifique se você digitou o código corretamente!");
+        mostrarModal("Ops!", "Cadastro não encontrado! Verifique se você digitou o código corretamente!");
         return;
     }
 
@@ -265,7 +265,7 @@ function preencherFormularioParaEdicao(v) {
 
 // DELETE!
 function excluirVoluntario(id) {
-    if (!confirm) return;
+    if (!confirm("Tem certeza que deseja excluir este voluntário?")) return;
     listaVoluntarios = listaVoluntarios.filter(v => v.id !== id);
     atualizarBancoDeDados();
     renderizarTabela();
