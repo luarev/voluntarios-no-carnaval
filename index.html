@@ -165,7 +165,7 @@
                                 <th class="col-privada">Contato</th>
                                 <th class="col-privada">Cidade</th>
                                 <th class="col-privada">Bairro</th>
-                                <th class="col-privada">Dias</th>
+                                <th>Dias</th> 
                                 <th class="col-privada">Ações</th>
                             </tr>
                         </thead>
@@ -177,6 +177,38 @@
             </div>
         </section>
     </main>
+
+    <div id="modal-alerta" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 id="modal-titulo">Aviso</h3>
+            <p id="modal-mensagem">Mensagem aqui</p>
+            <button class="btn btn-primary" onclick="fecharModal()">Entendi</button>
+        </div>
+    </div>
+
+    <div id="modal-admin" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Área Restrita</h3>
+            <p>Digite a senha de funcionário:</p>
+            <input type="password" id="input-senha-admin" class="modal-input" placeholder="Senha..." />
+            <div class="btn-row" style="justify-content: center;">
+                <button class="btn btn-ghost" onclick="fecharModalAdmin()">Cancelar</button>
+                <button class="btn btn-primary" onclick="verificarSenhaAdmin()">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-id" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Editar Cadastro</h3>
+            <p>Digite seu código de inscrição (ID):</p>
+            <input type="number" id="input-id-edicao" class="modal-input" placeholder="Ex: 1711..." />
+            <div class="btn-row" style="justify-content: center;">
+                <button class="btn btn-ghost" onclick="fecharModalId()">Cancelar</button>
+                <button class="btn btn-primary" onclick="buscarIdEdicao()">Buscar</button>
+            </div>
+        </div>
+    </div>
 
     <div class="confetti-bar"></div>
     <script src="script.js"></script>

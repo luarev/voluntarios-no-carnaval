@@ -1,11 +1,88 @@
 var listaVoluntarios = JSON.parse(localStorage.getItem("voluntarios")) || [];
 
 var bairrosPorCidade = {
-    recife: ["Bairro do Recife (Marco Zero)", "Bairro do Recife (Moeda)", "Bairro do Recife (Alfândega)", "São José (Sérgio Loreto)", "Boa Vista (Mercado)", "Santo Amaro (Aurora)"],
-    olinda: ["Carmo (Praça do Carmo)", "Guadalupe (Homem da Meia-Noite)", "Amparo", "Varadouro", "Rio Doce", "Peixinhos"]
+    recife: ["Bairro do Recife (Marco Zero/Praça do Arsenal)",
+        "Bairro do Recife (Rua da Moeda)",
+        "Bairro do Recife (Cais da Alfândega)",
+        "São José (Praça Sérgio Loreto/Forte das Cincos Pontas)",
+        "São José (Pátio do Terço)",
+        "Santo Antônio (Praça da Independência)",
+        "Santo Antônio (Ponte Duarte Coelho)",
+        "Boa Vista (Mercado da Boa Vista)",
+        "Boa Vista (Pátio de Santa Cruz)",
+        "Santo Amaro (Praça da Aurora)"],
+    olinda: ["Carmo (Praça do Carmo)",
+        "Guadalupe (Sede do Homem da Meia-Noite)",
+        "Amparo (Largo do Amparo)",
+        "Varadouro (Polo Varadouro)",
+        "Rio Doce (Polo Rio Doce)",
+        "Peixinhos (Avenida Nacional)",
+        "Cidade Tabajara (Casa da Rabeca)",
+        "Bairro Novo (Praça Doze de Março)",
+        "Jardim Brasil (Vias principais)"]
 };
 
 var nomeDias = { sabado: "Sáb", domingo: "Dom", segunda: "Seg", terca: "Ter", quarta: "Qua" };
+
+function mostrarModal(titulo, mensagem) {
+    document.getElementById('modal-titulo').textContent = titulo;
+    document.getElementById('modal-mensagem').textContent = mensagem;
+    document.getElementById('modal-alerta').style.display = 'flex';
+}
+function fecharModalAlerta() {
+    document.getElementById('modal-alerta').style.display = 'none';
+}
+function abrirModalAdmin() {
+    document.getElementById('modal-admin').style.display = 'flex';
+    document.getElementById('input-senha-admin').value = "";
+    document.getElementById('input-senha-admin').focus();
+}
+function fecharModalAdmin() {
+    document.getElementById('modal-admin').style.display = 'none';
+}
+function verificarSenhaAdmin() {
+    var senha = document.getElementById('input-senha-admin').value;
+    if (senha === "123") {
+        fecharModalAdmin();
+        sessionStorage.setItem("papel", "admin");
+        document.getElementById("badge-usuario").textContent = "Painel do Admin";
+        mostrarSecao('listar');
+    } else {
+        fecharModalAdmin();
+        mostrarModal("Acesso Negado", "Senha incorreta.");
+    }
+}
+function abrirModalBuscaId() {
+    document.getElementById('modal-id').style.display = 'flex';
+    document.getElementById('input-id-edicao').value = "";
+    document.getElementById('input-id-edicao').focus();
+}
+function fecharModalId() {
+    document.getElementById('modal-id').style.display = 'none';
+}
+function buscarIdEdicao() {
+    var idDigitado = document.getElementById('input-id-edicao').value;
+    if (!idDigitado) return;
+
+    var voluntario = listaVoluntarios.find(v => v.id == idDigitado);
+    fecharModalId();
+
+    if (!voluntario) {
+        mostrarModal("Cadastro não encontrado! Verifique se você digitou o código corretamente!");
+        return;
+    }
+
+    entrarComoVoluntario();
+    preencherFormularioParaEdicao(voluntario);
+}
+
+//eventos de teclado
+document.getElementById('input-senha-admin').addEventListener("keypress", function(event) {
+    if (event.key === "Enter") verificarSenhaAdmin();
+});
+document.getElementById('input-id-edicao').addEventListener("keypress", function(event) { 
+    if (event.key === "Enter") buscarIdEdicao();
+})
 
 function atualizarBancoDeDados() {
     localStorage.setItem("voluntarios", JSON.stringify(listaVoluntarios));
@@ -23,8 +100,8 @@ function entrarComoAdmin() {
         sessionStorage.setItem("papel", "admin");
         document.getElementById("badge-usuario").textContent = "Painel do Admin";
         mostrarSecao('listar');
-    } else {
-        alert("Senha incorreta!");
+    } else if (senha !== null) {
+        mostrarModal("Acesso Negado", "Senha incorreta! Tente novamente.");
     }
 }
 
@@ -32,7 +109,6 @@ function fazerLogout() {
     sessionStorage.removeItem("papel");
     window.location.reload();
 }
-
 
 function mostrarSecao(qual) {
     document.getElementById("secao-login").style.display = "none";
@@ -102,7 +178,7 @@ function salvarVoluntario() {
                 id: parseInt(idEdicao), nome: nome, cidade: cidade.value, bairro: bairro,
                 telefone: querTelefone ? telefone : null, email: querEmail ? email : null, dias: diasMarcados
             };
-            alert("Cadastro atualizado com sucesso!");
+            mostrarModal("Atualizado!", "Seu cadastro foi atualizado com sucesso.");
         }
     } else {
         // CREATE!
@@ -111,7 +187,8 @@ function salvarVoluntario() {
             id: novoId, nome: nome, cidade: cidade.value, bairro: bairro,
             telefone: querTelefone ? telefone : null, email: querEmail ? email : null, dias: diasMarcados
         });
-        alert(`Sucesso! Seu código de inscrição é: ${novoId}\nGuarde-o caso precise editar seus dados depois.`);
+        
+        mostrarModal("Sucesso, Voluntário!", `Você está dentro da equipe Limpa Brasil!\n\nGuarde seu código de inscrição:\nID: ${novoId}\n\nVocê vai precisar dele caso queira editar seus dados depois.`);
     }
 
     atualizarBancoDeDados(); // localStorage
@@ -164,14 +241,14 @@ function renderizarTabela() {
     });
 }
 
-//edição de voluntarios
+// ediçao de voluntarios
 function abrirModalEdicao() {
     var idDigitado = prompt("Por favor, digite seu código de inscrição (ID):");
     if (!idDigitado) return;
 
     var voluntario = listaVoluntarios.find(v => v.id == idDigitado);
     if (!voluntario) {
-        alert("Cadastro não encontrado!");
+        mostrarModal("Ops!", "Cadastro não encontrado! Verifique se você digitou o código corretamente.");
         return;
     }
 
@@ -205,7 +282,7 @@ function preencherFormularioParaEdicao(v) {
 
 // DELETE!
 function excluirVoluntario(id) {
-    if (!confirm("Tem certeza que deseja excluir?")) return;
+    if (!confirm) return;
     listaVoluntarios = listaVoluntarios.filter(v => v.id !== id);
     atualizarBancoDeDados();
     renderizarTabela();
