@@ -59,13 +59,13 @@ Projeto desenvolvido para a disciplina de **`Gestão de Times - Métodos Ágeis`
 | Nome | Matrícula |
 |---|---|
 | `Luana Revoredo Braz de Souza` | `01555750` |
-| `[Nome Completo]` | `[Matrícula]` |
-| `[Nome Completo]` | `[Matrícula]` |
-| `[Nome Completo]` | `[Matrícula]` |
-| `[Nome Completo]` | `[Matrícula]` |
-| `[Nome Completo]` | `[Matrícula]` |
-| `[Nome Completo]` | `[Matrícula]` |
-| `[Nome Completo]` | `[Matrícula]` |
+| `João Pedro Ferreira dos Santos` | `01890160` |
+| `Cauã Janguie Maciel Diniz` | `01888761` |
+| `Ana Cristina Pereira Moreira` | `01897521` |
+| `Ryan Oscar Bandeira` | `01902644` |
+| `Luísa Martins Gomes de Azevedo` | `01892205` |
+| `Guilherme Arcanjo Tavares` | `01894363` |
+| `Isabella Letícia Nunes de Melo` | `01902615` |
   
 > **Período:** `1º semestre`
 
