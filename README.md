@@ -64,7 +64,7 @@ Projeto desenvolvido para a disciplina de **`Gestão de Times - Métodos Ágeis`
 | `Ana Cristina Pereira Moreira` | `01897521` |
 | `Ryan Oscar Bandeira` | `01902644` |
 | `Luísa Martins Gomes de Azevedo` | `01892205` |
-| `Guilherme Arcanjo Tavares` | `01894363` |
+| `José William Guilherme Santos` | `01553544` |
 | `Isabella Letícia Nunes de Melo` | `01902615` |
   
 > **Período:** `1º semestre`
